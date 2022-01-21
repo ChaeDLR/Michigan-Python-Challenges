@@ -63,6 +63,16 @@ class CaesarsCipher:
 
         return plain_text
 
+    @classmethod
+    def bruteforce_decrypt(cls, ciphertext: str) -> list[str]:
+        """Brute force a cipher text. Return a list of all possible solutions"""
+        solutions: list[str] = []
+        for i in range(1, len(cls.__characters)):
+            solutions.append(
+                cls.decrypt(ciphertext, i)
+            )
+        return solutions
+
 
 # read test cases file and test the class's encrypt and decrypt methods
 if __name__ == "__main__":
@@ -114,6 +124,9 @@ if __name__ == "__main__":
             # test decryption method
             assert CaesarsCipher.decrypt(case[2], case[1]) == plaintext
 
+            # test bruteforce
+            assert plaintext in CaesarsCipher.bruteforce_decrypt(case[2])
+
             print(f"Test {i} passed!")
             passes += 1
         except:
@@ -121,14 +134,11 @@ if __name__ == "__main__":
             fails += 1
 
     print(f"\n{passes} passed.")
-    print(f"{fails} failed.")
+    print(f"{fails} failed.\n")
     ####### TEST #######
 
 
     ####### WRITE output to output.csv file #######
-    # test_cases.append(
-    #     ["Caesars Cipher", 177, ""]
-    # )
     with open(join(path, "output.csv"), "w") as output:
 
         output.write("plaintext, key, ciphertext\n")
