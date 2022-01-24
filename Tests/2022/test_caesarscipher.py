@@ -2,33 +2,8 @@
 
 
 class TestCaesarCipher:
-
-    # the file directory
-    path: str = join(getcwd(), "CaesarsCipher")
-
     # list[plaintext, key, ciphertext]
     test_cases: list[list[str, int, str]] = []
-
-
-    def __load_test_cases(self) -> None:
-        ####### READ test cases file #######
-        with open(join(path, "test_cases.csv"), "r") as testcases_:
-
-            lines = testcases_.readlines()
-
-            for line in lines[1:]:
-
-                line_prts: list[str] = line.split(",")
-
-                test_cases.append(
-                        [
-                    line_prts[0].strip(),
-                    int(line_prts[1].strip()),
-                    line_prts[2].strip()
-                    ]
-                )
-        ####### READ #######
-
 
 ####### TEST #######
 print("\n TEST CASE ITEMS")
