@@ -1,8 +1,9 @@
-from os import getcwd
-from os.path import join
+"""
+Chae DeLaRosa
+Shift cipher (Caesar's Cipher)
+"""
 
 
-# Chae DeLaRosa
 class CaesarsCipher:
 
     # all the characters the cipher will encrypt
@@ -33,7 +34,7 @@ class CaesarsCipher:
                 # if the index goes past the end of the characters list
                 if index >= len(cls.__characters):
                     # subtract length to loop the shift
-                    index -=  len(cls.__characters)
+                    index -= len(cls.__characters)
 
                 # add the new char to the end of the cipher text string
                 cipher_text = cipher_text.__add__(cls.__characters[index])
@@ -68,7 +69,5 @@ class CaesarsCipher:
         """Brute force a cipher text. Return a list of all possible solutions"""
         solutions: list[str] = []
         for i in range(1, len(cls.__characters)):
-            solutions.append(
-                cls.decrypt(ciphertext, i)
-            )
+            solutions.append(cls.decrypt(ciphertext, i))
         return solutions

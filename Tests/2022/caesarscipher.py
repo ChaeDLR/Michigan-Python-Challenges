@@ -2,8 +2,8 @@
 from typing import Callable
 from ..cases import caesarscipher as cases
 
-class TestCaesarCipher:
 
+class TestCaesarCipher:
     @classmethod
     def encrypt(cls, encrypt_: Callable) -> tuple[int, int]:
         """test encrypt callable"""
@@ -12,7 +12,7 @@ class TestCaesarCipher:
 
         for i, case in enumerate(cases, 1):
             try:
-                assert  encrypt_(case[0], case[1]) == case[2]
+                assert encrypt_(case[0], case[1]) == case[2]
                 print(f"Test {i} passed!")
                 passes += 1
             except:
@@ -29,12 +29,11 @@ class TestCaesarCipher:
         passes = 0
         fails = 0
 
-        # remove spaces from test cases plain text
-        plaintext: str =  "".join(case[0].split(" "))
-
         for i, case in enumerate(cases, 1):
+            # remove spaces from test cases plain text
+            plaintext: str = "".join(case[0].split(" "))
             try:
-                assert  decrypt_(case[2], case[1]) == plaintext
+                assert decrypt_(case[2], case[1]) == plaintext
                 print(f"Test {i} passed!")
                 passes += 1
             except:
@@ -49,10 +48,9 @@ class TestCaesarCipher:
     def bruteforce(cls, bruteforce_: Callable) -> int:
         """test decrypt callable"""
 
-        # remove spaces from test cases plain text
-        plaintext: str =  "".join(case[0].split(" "))
-
         for case in cases:
+            # remove spaces from test cases plain text
+            plaintext: str = "".join(case[0].split(" "))
             try:
                 assert plaintext in bruteforce_(case[2])
                 print(f"Test passed!")
