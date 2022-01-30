@@ -1,100 +1,103 @@
 """
 Chae DeLaRosa
-Shift cipher (Caesar's Cipher)
+
+Temperature converter challenge
 """
 
 
-class CaesarsCipher:
-
-    # all the characters the cipher will encrypt
-    # all other characters will be skipped
-    __characters: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-
-    # class method decorator allows the method to be called without needing
-    # an instance of the class. ex. CaesarsCipher.encrypt(plaintext, key)
-    @classmethod
-    def encrypt(cls, plaintext: str, key: int) -> str:
-        """encrypt plain text by shifting the index of each character by the key"""
-
-        # abbreviate the key if it is larger than the characters string
-        while key >= len(cls.__characters):
-            key -= len(cls.__characters)
-
-        # empty string to add the encrypted chars to
-        cipher_text: str = ""
-
-        # for each character in the text
-        for pt_char in plaintext:
-            # if the character is in the characters string
-            if pt_char in cls.__characters:
-                # add the key to the index of the plain text char
-                # to get the index of the cipher text char
-                index: int = cls.__characters.find(pt_char) + key
-
-                # if the index goes past the end of the characters list
-                if index >= len(cls.__characters):
-                    # subtract length to loop the shift
-                    index -= len(cls.__characters)
-
-                # add the new char to the end of the cipher text string
-                cipher_text = cipher_text.__add__(cls.__characters[index])
-
-        return cipher_text
-
-    @classmethod
-    def decrypt(cls, ciphertext: str, key: int) -> str:
-        """decrypt the given ciphertext"""
-
-        # abbreviate the key if it is larger than the characters string
-        while key >= len(cls.__characters):
-            key -= len(cls.__characters)
-
-        plain_text: str = ""
-
-        for ct_char in ciphertext:
-
-            if ct_char in cls.__characters:
-
-                index: int = cls.__characters.find(ct_char) - key
-
-                if index < 0:
-                    index += len(cls.__characters)
-
-                plain_text = plain_text.__add__(cls.__characters[index])
-
-        return plain_text
-
-    @classmethod
-    def bruteforce_decrypt(cls, ciphertext: str) -> list[str]:
-        """Brute force a cipher text. Return a list of all possible solutions"""
-        solutions: list[str] = []
-        for i in range(1, len(cls.__characters)):
-            solutions.append(cls.decrypt(ciphertext, i))
-        return solutions
+from cgi import test
 
 
+def celsius(fahrenheit: float) -> float:
+    """
+    Convert a float representing temperature in fahrenheit
+    to one representing temperature in celsius
+    """
+    return round((fahrenheit - 32) / 1.8, 2)
+
+
+def fahrenheit(celsius: float) -> float:
+    """
+    Convert a float representing temperature in celsius
+    to one representing temperature in fahrenheit
+    """
+    return round(celsius * 1.8 + 32, 2)
+
+
+def prompt_temperature() -> float:
+    """
+    Get a valid float representing temperature from the console
+    return None if the user enters an exit code
+    """
+    while 1:
+        print("Enter a temperature.")
+
+        users_input = input()
+
+        try:
+            return float(users_input)
+
+        except:
+            if users_input in ["esc", "exit", "quit"]:
+                return
+
+            print("\nError: Invalid input.")
+            print("Enter a float value.\n")
+
+
+# if this file in the start point of the running python program
 if __name__ == "__main__":
-    # import challenge tests
-    from challenges import tests
+    import sys
 
-    encrypt_results: tuple = tests.TestCaesarsCipher.encrypt(
-           CaesarsCipher.encrypt
-       )
-    print(f"Encryption results: {encrypt_results}")
+    if "test" in sys.argv:
+        from challenges import tests
 
-    decrypt_results: tuple = tests.TestCaesarsCipher.decrypt(
-            CaesarsCipher.decrypt
-        )
-    print(f"Decryption results: {decrypt_results}")
+        celsius_result: tuple = tests.TestTempConverter.celsius(celsius)
+        print(f"Celsius results = {celsius_result}")
 
-    bruteforce_results: tuple = tests.TestCaesarsCipher.bruteforce(
-            CaesarsCipher.bruteforce_decrypt
-        )
-    print(f"Brute force results: {bruteforce_results}")
+    else:
 
-    totals: list[int, int] = [0, 0]
-    for result in [encrypt_results, decrypt_results, bruteforce_results]:
-        totals[0] += result[0]
-        totals[1] += result[1]
+        print("\n-- Temperature converter --")
 
-    print(f"\nTotals: passes {totals[0]}, fails {totals[1]}\n")
+        while 1:
+            print("Select conversion.")
+            print("1. Fahrenheit to celsius")
+            print("2. Celsius to fahrenheit\n")
+
+            # wait for the user to submit input
+            # attempt to cast input to a int
+            users_input: str = input().lower()
+
+            ####### First menu option. Fahrenheit to celsius. #######
+            if users_input in ["1", "1.", "fahrenheit"]:
+                print("Enter temperature in fahrenheit to convert to celsius.")
+
+                temp: float = prompt_temperature()
+
+                # temp == None if the user entered an exit code
+                if temp == None:
+                    # set users_input to any escape key
+                    users_input = "esc"
+                    break
+
+                print(f"\n{temp} fahrenheit equals {celsius(temp)} celsius.\n")
+                continue
+
+            ####### Second menu option. Celsius to fahrenheit. #######
+            elif users_input in ["2", "2.", "celsius"]:
+                print("Enter temperature in celsius to convert to fahrenheit.")
+
+                temp: float = prompt_temperature()
+
+                if temp == None:
+                    users_input = "esc"
+                    break
+
+                print(f"\n{temp} celsius equals {fahrenheit(temp)} fahrenheit.\n")
+                continue
+
+            if users_input in ["esc", "exit", "quit"]:
+                break
+
+            print("\nError: Invalid input.")
+            print("Select a menu option.\n")

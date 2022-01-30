@@ -1,0 +1,100 @@
+"""
+Chae DeLaRosa
+Shift cipher (Caesar's Cipher)
+"""
+
+
+class CaesarsCipher:
+
+    # all the characters the cipher will encrypt
+    # all other characters will be skipped
+    __characters: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+    # class method decorator allows the method to be called without needing
+    # an instance of the class. ex. CaesarsCipher.encrypt(plaintext, key)
+    @classmethod
+    def encrypt(cls, plaintext: str, key: int) -> str:
+        """encrypt plain text by shifting the index of each character by the key"""
+
+        # abbreviate the key if it is larger than the characters string
+        while key >= len(cls.__characters):
+            key -= len(cls.__characters)
+
+        # empty string to add the encrypted chars to
+        cipher_text: str = ""
+
+        # for each character in the text
+        for pt_char in plaintext:
+            # if the character is in the characters string
+            if pt_char in cls.__characters:
+                # add the key to the index of the plain text char
+                # to get the index of the cipher text char
+                index: int = cls.__characters.find(pt_char) + key
+
+                # if the index goes past the end of the characters list
+                if index >= len(cls.__characters):
+                    # subtract length to loop the shift
+                    index -= len(cls.__characters)
+
+                # add the new char to the end of the cipher text string
+                cipher_text = cipher_text.__add__(cls.__characters[index])
+
+        return cipher_text
+
+    @classmethod
+    def decrypt(cls, ciphertext: str, key: int) -> str:
+        """decrypt the given ciphertext"""
+
+        # abbreviate the key if it is larger than the characters string
+        while key >= len(cls.__characters):
+            key -= len(cls.__characters)
+
+        plain_text: str = ""
+
+        for ct_char in ciphertext:
+
+            if ct_char in cls.__characters:
+
+                index: int = cls.__characters.find(ct_char) - key
+
+                if index < 0:
+                    index += len(cls.__characters)
+
+                plain_text = plain_text.__add__(cls.__characters[index])
+
+        return plain_text
+
+    @classmethod
+    def bruteforce_decrypt(cls, ciphertext: str) -> list[str]:
+        """Brute force a cipher text. Return a list of all possible solutions"""
+        solutions: list[str] = []
+        for i in range(1, len(cls.__characters)):
+            solutions.append(cls.decrypt(ciphertext, i))
+        return solutions
+
+
+if __name__ == "__main__":
+    # import challenge tests
+    from challenges import tests
+
+    encrypt_results: tuple = tests.TestCaesarsCipher.encrypt(
+           CaesarsCipher.encrypt
+       )
+    print(f"Encryption results: {encrypt_results}")
+
+    decrypt_results: tuple = tests.TestCaesarsCipher.decrypt(
+            CaesarsCipher.decrypt
+        )
+    print(f"Decryption results: {decrypt_results}")
+
+    bruteforce_results: tuple = tests.TestCaesarsCipher.bruteforce(
+            CaesarsCipher.bruteforce_decrypt
+        )
+    print(f"Brute force results: {bruteforce_results}")
+
+    totals: list[int, int] = [0, 0]
+    for result in [encrypt_results, decrypt_results, bruteforce_results]:
+        totals[0] += result[0]
+        totals[1] += result[1]
+
+    print(f"\nTotals: passes {totals[0]}, fails {totals[1]}\n")

@@ -1,10 +1,8 @@
 import os
 from os import listdir, path
 
-data_path: str = path.join(
-                    os.getcwd(),
-                    os.path.abspath(f"challenges/tests/cases/data")
-                )
+data_path: str = path.join(os.getcwd(), os.path.abspath(f"challenges/tests/cases/data"))
+
 
 def get(filename: str) -> list:
     """
@@ -16,13 +14,15 @@ def get(filename: str) -> list:
 
         lines = testcases_.readlines()
         for line in lines[1:]:
+            # TODO: Need to fix newline slicing
+            line.strip()
+            print(line[:-1])
+            line = line[:-1] if line[-1:] == "\n" else line
             line_prts: list[str] = line.split(",")
 
-            test_cases.append(
-                [
-                    line_prts[0].strip(),
-                    int(line_prts[1].strip()),
-                    line_prts[2].strip()
-                ]
-            )
+            case = []
+            for prt in line_prts:
+                case.append(prt)
+
+            test_cases.append(case)
     return test_cases
