@@ -74,6 +74,7 @@ class CaesarsCipher:
 
 
 if __name__ == "__main__":
+    # import challenge tests
     from challenges import tests
 
     encrypt_results: tuple = tests.TestCaesarsCipher.encrypt(
