@@ -1,8 +1,9 @@
-from os import getcwd
-from os.path import join
+"""
+Chae DeLaRosa
+Shift cipher (Caesar's Cipher)
+"""
 
 
-# Chae DeLaRosa
 class CaesarsCipher:
 
     # all the characters the cipher will encrypt
@@ -33,7 +34,7 @@ class CaesarsCipher:
                 # if the index goes past the end of the characters list
                 if index >= len(cls.__characters):
                     # subtract length to loop the shift
-                    index -=  len(cls.__characters)
+                    index -= len(cls.__characters)
 
                 # add the new char to the end of the cipher text string
                 cipher_text = cipher_text.__add__(cls.__characters[index])
@@ -68,84 +69,31 @@ class CaesarsCipher:
         """Brute force a cipher text. Return a list of all possible solutions"""
         solutions: list[str] = []
         for i in range(1, len(cls.__characters)):
-            solutions.append(
-                cls.decrypt(ciphertext, i)
-            )
+            solutions.append(cls.decrypt(ciphertext, i))
         return solutions
 
 
-# read test cases file and test the class's encrypt and decrypt methods
 if __name__ == "__main__":
+    from challenges import tests
 
-    # the file directory
-    path: str = join(getcwd(), "CaesarsCipher")
+    encrypt_results: tuple = tests.TestCaesarsCipher.encrypt(
+           CaesarsCipher.encrypt
+       )
+    print(f"Encryption results: {encrypt_results}")
 
-    # list[plaintext, key, ciphertext]
-    test_cases: list[list[str, int, str]] = []
+    decrypt_results: tuple = tests.TestCaesarsCipher.decrypt(
+            CaesarsCipher.decrypt
+        )
+    print(f"Decryption results: {decrypt_results}")
 
+    bruteforce_results: tuple = tests.TestCaesarsCipher.bruteforce(
+            CaesarsCipher.bruteforce_decrypt
+        )
+    print(f"Brute force results: {bruteforce_results}")
 
-    ####### READ test cases file #######
-    with open(join(path, "test_cases.csv"), "r") as testcases_:
+    totals: list[int, int] = [0, 0]
+    for result in [encrypt_results, decrypt_results, bruteforce_results]:
+        totals[0] += result[0]
+        totals[1] += result[1]
 
-        lines = testcases_.readlines()
-
-        for line in lines[1:]:
-
-            line_prts: list[str] = line.split(",")
-
-            test_cases.append(
-                    [
-                line_prts[0].strip(),
-                int(line_prts[1].strip()),
-                line_prts[2].strip()
-                ]
-            )
-    ####### READ #######
-
-
-    ####### TEST #######
-    print("\n TEST CASE ITEMS")
-    print("------------------")
-    for item in test_cases:
-        print(item)
-    print("")
-
-    passes: int = 0
-    fails: int = 0
-    print(f"testing...\n")
-    for i, case in enumerate(test_cases, 1):
-        try:
-            # test encryption method
-            assert CaesarsCipher.encrypt(case[0], case[1]) == case[2]
-
-            # remove spaces from test cases plain text
-            plaintext: str =  "".join(case[0].split(" "))
-
-            # test decryption method
-            assert CaesarsCipher.decrypt(case[2], case[1]) == plaintext
-
-            # test bruteforce
-            assert plaintext in CaesarsCipher.bruteforce_decrypt(case[2])
-
-            print(f"Test {i} passed!")
-            passes += 1
-        except:
-            print(f"Test {i} failed!")
-            fails += 1
-
-    print(f"\n{passes} passed.")
-    print(f"{fails} failed.\n")
-    ####### TEST #######
-
-
-    ####### WRITE output to output.csv file #######
-    with open(join(path, "output.csv"), "w") as output:
-
-        output.write("plaintext, key, ciphertext\n")
-
-        for test in test_cases:
-
-            test[2] = CaesarsCipher.encrypt(test[0], test[1])
-
-            output.write(f"{test[0]}, {test[1]}, {test[2]}\n")
-    ####### WRITE #######
+    print(f"\nTotals: passes {totals[0]}, fails {totals[1]}\n")
