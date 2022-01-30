@@ -76,6 +76,24 @@ class CaesarsCipher:
 if __name__ == "__main__":
     from challenges import tests
 
-    encrypt_results: tuple = tests.TestCaesarsCipher.encrypt(CaesarsCipher.encrypt)
-
+    encrypt_results: tuple = tests.TestCaesarsCipher.encrypt(
+           CaesarsCipher.encrypt
+       )
     print(f"Encryption results: {encrypt_results}")
+
+    decrypt_results: tuple = tests.TestCaesarsCipher.decrypt(
+            CaesarsCipher.decrypt
+        )
+    print(f"Decryption results: {decrypt_results}")
+
+    bruteforce_results: tuple = tests.TestCaesarsCipher.bruteforce(
+            CaesarsCipher.bruteforce_decrypt
+        )
+    print(f"Brute force results: {bruteforce_results}")
+
+    totals: list[int, int] = [0, 0]
+    for result in [encrypt_results, decrypt_results, bruteforce_results]:
+        totals[0] += result[0]
+        totals[1] += result[1]
+
+    print(f"\nTotals: passes {totals[0]}, fails {totals[1]}\n")
