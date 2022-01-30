@@ -71,3 +71,11 @@ class CaesarsCipher:
         for i in range(1, len(cls.__characters)):
             solutions.append(cls.decrypt(ciphertext, i))
         return solutions
+
+
+if __name__ == "__main__":
+    from challenges import tests
+
+    encrypt_results: tuple = tests.TestCaesarsCipher.encrypt(CaesarsCipher.encrypt)
+
+    print(f"Encryption results: {encrypt_results}")
