@@ -18,7 +18,7 @@ def rec_result(test_method: Callable) -> tuple[int, int]:
 
         for i in range(1, len(cls.cases) + 1):
 
-            print(f"Testing case {i}: {cls.cases[i-1]}")
+            print(f"\nTesting case {i}: {cls.cases[i-1]}")
 
             try:
                 test_method(cls, callable, _case=cls.cases[i-1])

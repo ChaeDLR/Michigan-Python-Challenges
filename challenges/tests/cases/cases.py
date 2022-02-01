@@ -14,14 +14,12 @@ def get(filename: str) -> list:
 
         lines = testcases_.readlines()
         for line in lines[1:]:
-            # TODO: Need to fix newline slicing
-            line.strip()
-            print(line[:-1])
-            line = line[:-1] if line[-1:] == "\n" else line
+            line = line.rstrip('\n')
             line_prts: list[str] = line.split(",")
 
             case = []
             for prt in line_prts:
+                prt = prt.strip()
                 case.append(prt)
 
             test_cases.append(case)

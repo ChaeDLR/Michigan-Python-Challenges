@@ -13,11 +13,20 @@ class TestTempConverter:
     def celsius(cls, func: Callable, _case=[]) -> tuple[int, int]:
         """Test celsius to fahrenheit conversion"""
         try:
-            celsius = float(_case[0])
-            fahrenheit = float(_case[1])
+            _celsius = round(float(_case[0]), 2)
+            _fahrenheit = round(float(_case[1]), 2)
         except:
-            print(f"Test case {_case} convertion failed!")
-            print(f"Method: {func.__name__}")
-            raise ValueError
+            print(f"\nTest case {_case} value casting failed!")
+            print(f"Method: {func.__name__}\n")
+            raise
 
-        assert round(func(celsius), 2) == round(fahrenheit, 2)
+        output: float = round(func(_celsius), 2)
+        expected: float = round(_fahrenheit, 2)
+
+        try:
+            assert output == expected
+        except:
+            print(f"\nFailed asserts equals!")
+            print(f"Output {output}")
+            print(f"Expected: {expected}\n")
+            raise
