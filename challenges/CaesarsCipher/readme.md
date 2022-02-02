@@ -21,17 +21,20 @@ decrypt(ciphertext: str, key: int) -> str:
 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 |
 
 ### Examples
-1. 
+#### Encrypt
+1.
      * Input: plaintext="Python", key=7
      * Output: "WFAovu"
      * Explanation: We shift the index of each character in "Python" by key and return the result.
 ___
 
-2. 
+2.
     * Input: plaintext="Caesars Cipher", key=21
     * Output: "XvzNvMNXDKCzM"
+
+#### Decrypt
 ___
-3. 
+1.
    * Input: ciphertext="SoinomgtVEznut", key=6
    * Output: "Michigan Python"
 
@@ -39,5 +42,5 @@ ___
 Write a brute force decryption method.
 ```
 bruteforce_decrypt(ciphertext: str) -> list[str]:
-"""Brute force a cipher text. Return a list of all possible solutions"""
+"""Brute force a cipher text"""
 ```

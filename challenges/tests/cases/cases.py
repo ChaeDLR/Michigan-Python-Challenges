@@ -1,10 +1,10 @@
 import os
 from os import listdir, path
 
-data_path: str = path.join(
-                    os.getcwd(),
-                    os.path.abspath(f"challenges/tests/cases/data")
-                )
+data_path: str = path.join(os.getcwd(), os.path.abspath(
+                f"challenges/tests/cases/data"
+            )
+        )
 
 def get(filename: str) -> list:
     """
@@ -16,13 +16,13 @@ def get(filename: str) -> list:
 
         lines = testcases_.readlines()
         for line in lines[1:]:
+            line = line.rstrip('\n')
             line_prts: list[str] = line.split(",")
 
-            test_cases.append(
-                [
-                    line_prts[0].strip(),
-                    int(line_prts[1].strip()),
-                    line_prts[2].strip()
-                ]
-            )
+            case = []
+            for prt in line_prts:
+                prt = prt.strip()
+                case.append(prt)
+
+            test_cases.append(case)
     return test_cases
