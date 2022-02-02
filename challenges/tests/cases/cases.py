@@ -1,10 +1,8 @@
 import os
 from os import listdir, path
 
-data_path: str = path.join(os.getcwd(), os.path.abspath(
-                f"challenges/tests/cases/data"
-            )
-        )
+data_path: str = path.join(os.getcwd(), os.path.abspath(f"challenges/tests/cases/data"))
+
 
 def get(filename: str) -> list:
     """
@@ -15,8 +13,8 @@ def get(filename: str) -> list:
     with open(path.join(data_path, f"{filename}.csv"), "r") as testcases_:
 
         lines = testcases_.readlines()
-        for line in lines[1:]:
-            line = line.rstrip('\n')
+        for line in lines:
+            line = line.rstrip("\n")
             line_prts: list[str] = line.split(",")
 
             case = []

@@ -10,7 +10,7 @@ class TestTempConverter:
 
     @classmethod
     @rec_result
-    def celsius(cls, func: Callable, _case=[]) -> tuple[int, int]:
+    def celsius_to_fahrenheit(cls, func: Callable, _case=[]) -> tuple[int, int]:
         """Test celsius to fahrenheit conversion"""
         try:
             _celsius = round(float(_case[0]), 2)
@@ -33,7 +33,7 @@ class TestTempConverter:
 
     @classmethod
     @rec_result
-    def fahrenheit(cls, func: Callable, _case=[]) -> tuple[int, int]:
+    def fahrenheit_to_celsius(cls, func: Callable, _case=[]) -> tuple[int, int]:
         """Test fahrenheit to celsius"""
         try:
             _celsius = round(float(_case[0]), 2)
