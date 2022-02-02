@@ -1,11 +1,7 @@
 """
 Chae DeLaRosa
-
 Temperature converter challenge
 """
-
-
-from cgi import test
 
 
 def celsius(fahrenheit: float) -> float:
@@ -52,11 +48,21 @@ if __name__ == "__main__":
     if "test" in sys.argv:
         from challenges import tests
 
-        # test celsius to fahrenheit
-        to_celsius_result: tuple[int, int] = tests.TestTempConverter.celsius(fahrenheit)
-        print(f"\nCelsius results = {to_celsius_result}")
+        # test celsius to fahrenheit conversion
+        to_celsius_result: tuple[int, int] = tests.TestTempConverter.celsius(
+                    fahrenheit
+                )
+        print(f"\nCelsius to fahrenheit results = {to_celsius_result}")
         print(f"Passes: {to_celsius_result[0]}")
         print(f"Fails: {to_celsius_result[1]}")
+
+        # test fahrenheit to celsius conversion
+        to_fahrenheit_result: tuple[int, int] = tests.TestTempConverter.fahrenheit(
+                    celsius
+                )
+        print(f"\Fahrenheit to celsius results = {to_fahrenheit_result}")
+        print(f"Passes: {to_fahrenheit_result[0]}")
+        print(f"Fails: {to_fahrenheit_result[1]}")
 
     else:
 

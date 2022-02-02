@@ -1,8 +1,10 @@
 import os
 from os import listdir, path
 
-data_path: str = path.join(os.getcwd(), os.path.abspath(f"challenges/tests/cases/data"))
-
+data_path: str = path.join(os.getcwd(), os.path.abspath(
+                f"challenges/tests/cases/data"
+            )
+        )
 
 def get(filename: str) -> list:
     """
