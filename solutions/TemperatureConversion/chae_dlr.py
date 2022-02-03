@@ -45,6 +45,7 @@ def prompt_temperature() -> float:
 if __name__ == "__main__":
     import sys
 
+    # cmd line args
     if "test" in sys.argv:
         from challenges import tests
 
@@ -64,6 +65,7 @@ if __name__ == "__main__":
         print(f"Passes: {to_fahrenheit_result[0]}")
         print(f"Fails: {to_fahrenheit_result[1]}")
 
+    # console program
     else:
 
         print("\n-- Temperature converter --")
