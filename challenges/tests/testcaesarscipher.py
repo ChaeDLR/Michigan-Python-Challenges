@@ -15,7 +15,7 @@ class TestCaesarsCipher:
         try:
             key: int = int(_case[1])
         except:
-            print(f"Test case {_case[1]} convertion failed!")
+            print(f"Test case {_case[1]} conversion failed!")
             print(f"Method: {func.__name__}")
             raise ValueError
 
@@ -29,7 +29,7 @@ class TestCaesarsCipher:
         try:
             key: int = int(_case[1])
         except:
-            print(f"Test case {_case[1]} convertion failed!")
+            print(f"Test case {_case[1]} conversion failed!")
             print(f"Method: {func.__name__}")
             raise ValueError
 
